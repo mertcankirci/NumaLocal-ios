@@ -7,7 +7,14 @@
 
 import Foundation
 
-final class UserSessionManager: ObservableObject {
+protocol SessionManagable {
+    var user: UserData? {get set}
+    func setUser(_ user: UserData)
+    func markOnboardingCompleted()
+    func clearSession()
+}
+
+final class UserSessionManager: SessionManagable, ObservableObject {
     @Published var user: UserData? = nil
     private let persistenceService: PersistenceServicable
 
@@ -31,5 +38,3 @@ final class UserSessionManager: ObservableObject {
         persistenceService.isOnboardingCompleted()
     }
 }
-
-

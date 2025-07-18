@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainFlowView: View {
     @EnvironmentObject private var mainVM: MainViewModel
+    @ObservedObject var streakVM: StreakViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -16,11 +17,11 @@ struct MainFlowView: View {
             Group {
                 switch mainVM.selectedTab {
                 case .home:
-                    HomeContainerView()
+                    HomeContainerView(streakVM: streakVM)
                 case .chat:
-                    HomeContainerView()
+                    EmptyView()
                 case .progress:
-                    HomeContainerView()
+                    EmptyView()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -33,6 +34,6 @@ struct MainFlowView: View {
 }
 
 #Preview {
-    MainFlowView()
+    MainFlowView(streakVM: StreakViewModel(networkService: NetworkService()))
         .environmentObject(MainViewModel(navigationService: NavigationService()))
 }

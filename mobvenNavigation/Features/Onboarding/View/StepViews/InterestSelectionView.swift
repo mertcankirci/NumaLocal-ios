@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InterestSelectionView: View {
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
     var body: some View {
         FlowLayoutView(data: InterestOption.allCases) { interest in
             SelectableCell(option: interest,
@@ -27,8 +27,7 @@ struct InterestSelectionView: View {
     
     let persistenceService = PersistenceService()
     
-    InterestSelectionView()
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
+    InterestSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }
 
 

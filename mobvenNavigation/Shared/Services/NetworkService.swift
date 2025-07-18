@@ -10,42 +10,49 @@ import Foundation
 protocol NetworkServicable {
     func loginOrFetchUser(_ appleUser: AppleSignInUser) async throws -> UserData
     func completeOnboarding(_ user: UserData) async throws -> UserData
+    func fetchUserStreak(for userId: Int) async throws -> UserStreakModel
 }
 
 final class NetworkService: NetworkServicable {
     
-    private var mockUserStore: [String: UserData] = [:] // userId'ye göre saklanan mock kullanıcılar
-    
     func loginOrFetchUser(_ appleUser: AppleSignInUser) async throws -> UserData {
-        // Simulate network delay
         try await Task.sleep(nanoseconds: 500_000_000)
-        
-        if let existingUser = mockUserStore[appleUser.userId] {
-            return existingUser
-        } else {
-            let newUser = UserData(
-                id: Int.random(in: 1000...9999),
-                name: appleUser.fullName ?? "Guest",
-                email: appleUser.email ?? "unknown@mail.com",
-                age: .range13_18,
-                nativeLanguage: .turkish,
-                targetLanguage: .english,
-                languageLevel: .b1,
-                languageGoals: [.comprehension, .fluency, .speaking],
-                practicePurpose: [.career, .dailyTalk],
-                weeklyGoal: .twoToThree,
-                interests: [.art, .animals, .culture]
-            )
-            mockUserStore[appleUser.userId] = newUser
-            return newUser
-        }
+
+        return UserData(
+            id: Int.random(in: 1000...9999),
+            name: appleUser.fullName ?? "Mertcan",
+            email: appleUser.email ?? "unknown@mail.com",
+            age: .range13_18,
+            nativeLanguage: .turkish,
+            targetLanguage: .english,
+            languageLevel: .b1,
+            languageGoals: [.fluency, .comprehension],
+            practicePurpose: [.career],
+            weeklyGoal: .twoToThree,
+            interests: [.art, .animals]
+        )
     }
-    
+
     func completeOnboarding(_ user: UserData) async throws -> UserData {
         try await Task.sleep(nanoseconds: 500_000_000)
-        
-        mockUserStore[String(user.id)] = user
         return user
     }
-}
+    
+    func fetchUserStreak(for userId: Int) async throws -> UserStreakModel {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        try await Task.sleep(nanoseconds: 300_000_000)
 
+        return UserStreakModel(
+            completedDates: [
+                calendar.date(byAdding: .day, value: -1, to: today)!,
+                calendar.date(byAdding: .day, value: -2, to: today)!,
+                calendar.date(byAdding: .day, value: -4, to: today)!
+            ],
+            longestStreak: 6,
+            currentStreak: 2,
+            todayProgress: 0.35
+        )
+    }
+}

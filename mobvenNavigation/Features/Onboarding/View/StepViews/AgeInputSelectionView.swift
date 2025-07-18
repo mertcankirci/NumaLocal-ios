@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AgeInputSelectionView: View {
 //    @EnvironmentObject private var userInfoVM: UserInfoViewModel
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
 
     var body: some View {
         VStack(spacing: 16) {
@@ -33,6 +33,5 @@ struct AgeInputSelectionView: View {
 
 #Preview {
     let persistenceService = PersistenceService()
-    AgeInputSelectionView()
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
+    AgeInputSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }

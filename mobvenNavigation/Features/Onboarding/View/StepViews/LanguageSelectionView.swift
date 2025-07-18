@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LanguageSelectionView: View {
-    @EnvironmentObject var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
     
     let isNativeLanguageSelection: Bool
     
@@ -51,7 +51,5 @@ struct LanguageSelectionView: View {
 #Preview {
     let persistenceService = PersistenceService()
     
-    LanguageSelectionView(isNativeLanguageSelection: true)
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
-
+    LanguageSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()), isNativeLanguageSelection: true)
 }

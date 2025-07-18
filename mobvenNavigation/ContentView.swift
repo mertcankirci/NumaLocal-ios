@@ -10,16 +10,20 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var flowNav: AppFlowNavigator
     @EnvironmentObject private var sessionManager: UserSessionManager
+    @ObservedObject var loginVM: LoginViewModel
+    @ObservedObject var welcomeVM: WelcomeViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
+    @ObservedObject var streakVM: StreakViewModel
 
     var body: some View {
         Group {
             switch flowNav.current {
             case .welcome:
-                WelcomeScreen()
+                WelcomeScreen(loginVM: loginVM, welcomeVM: welcomeVM)
             case .onboarding:
-                OnboardingScreen()
+                OnboardingScreen(onboardingVM: onboardingVM)
             case .main:
-                MainFlowView()
+                MainFlowView(streakVM: streakVM)
             }
         }
         .animation(.easeInOut, value: flowNav.current)
@@ -40,7 +44,13 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let appleSignInService = AppleSignInManager()
+    let networkService = NetworkService()
+    let persistenceService = PersistenceService()
+    let appFlowNavigator: AppFlowNavigator = AppFlowNavigator()
+    let onboardingVM = OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator())
+    
+    ContentView(loginVM: LoginViewModel(appleSignInService: appleSignInService, networkService: networkService, sessionManager: UserSessionManager(persistenceService: persistenceService), flowNav: appFlowNavigator), welcomeVM: WelcomeViewModel(), onboardingVM: onboardingVM, streakVM: StreakViewModel(networkService: networkService))
         .environmentObject(AppFlowNavigator())
         .environmentObject(UserSessionManager(persistenceService: PersistenceService()))
 }

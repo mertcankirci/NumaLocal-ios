@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LearningPurposeSelectionView: View {
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
 
     var body: some View {
         VStack(spacing: 16) {
@@ -27,6 +27,5 @@ struct LearningPurposeSelectionView: View {
 
 #Preview {
     let persistenceService = PersistenceService()
-    LearningPurposeSelectionView()
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
+    LearningPurposeSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }

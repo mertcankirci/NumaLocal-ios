@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LanguageLevelSelectionView: View {
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
 
     var body: some View {
         VStack(spacing: 16) {
@@ -30,6 +30,5 @@ struct LanguageLevelSelectionView: View {
 
 #Preview {
     let persistenceService = PersistenceService()
-    LanguageLevelSelectionView()
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
+    LanguageLevelSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }

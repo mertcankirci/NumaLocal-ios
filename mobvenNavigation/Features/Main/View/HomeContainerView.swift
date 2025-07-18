@@ -10,11 +10,14 @@ import SwiftUI
 struct HomeContainerView: View {
     @EnvironmentObject private var homeNav: NavigationService<HomeRoute>
     @EnvironmentObject private var homeVM: HomeViewModel
+    @ObservedObject var streakVM: StreakViewModel
 
     var body: some View {
         NavigationContainerView(
             navigationService: homeNav,
-            root: HomeScreen(),
+            root:
+                HomeScreen(streakVM: streakVM)
+            ,
             build: { route in
                 switch route {
                 case .detail(let itemID):
@@ -33,7 +36,7 @@ struct HomeContainerView_Previews: PreviewProvider {
     static var previews: some View {
         let nav = NavigationService<HomeRoute>()
         let vm  = HomeViewModel(navigationService: nav)
-        return HomeContainerView()
+        return HomeContainerView(streakVM: StreakViewModel(networkService: NetworkService()))
             .environmentObject(nav)
             .environmentObject(vm)
     }

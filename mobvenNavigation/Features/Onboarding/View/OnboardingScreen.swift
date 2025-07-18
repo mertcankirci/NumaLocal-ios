@@ -10,7 +10,7 @@ import SwiftUI
 struct OnboardingScreen: View {
     
     @EnvironmentObject private var appNav: AppFlowNavigator
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
     
     var body: some View {
         VStack {
@@ -27,21 +27,21 @@ struct OnboardingScreen: View {
             ZStack {
                 switch onboardingVM.step {
                 case .nativeLanguageSelection:
-                    LanguageSelectionView(isNativeLanguageSelection: true)
+                    LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: true)
                 case .targetLanguageSelection:
-                    LanguageSelectionView(isNativeLanguageSelection: false)
+                    LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: false)
                 case .learningPurposeSelection:
-                    LearningPurposeSelectionView()
+                    LearningPurposeSelectionView(onboardingVM: onboardingVM)
                 case .learningGoalSelection:
-                    LearningGoalSelectionView()
+                    LearningGoalSelectionView(onboardingVM: onboardingVM)
                 case .currentLanguageLevel:
-                    LanguageLevelSelectionView()
+                    LanguageLevelSelectionView(onboardingVM: onboardingVM)
                 case .ageInput:
-                    AgeInputSelectionView()
+                    AgeInputSelectionView(onboardingVM: onboardingVM)
                 case .interestSelection:
-                    InterestSelectionView()
+                    InterestSelectionView(onboardingVM: onboardingVM)
                 case .speakingFrequencyGoal:
-                    WeeklyGoalSelectionView()
+                    WeeklyGoalSelectionView(onboardingVM: onboardingVM)
                 }
             }
             .padding(.top, 8)
@@ -119,7 +119,6 @@ struct OnboardingScreen: View {
 #Preview {
     let persistenceService = PersistenceService()
     
-    OnboardingScreen()
+    OnboardingScreen(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
         .environmentObject(AppFlowNavigator())
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }

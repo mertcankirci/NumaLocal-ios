@@ -19,6 +19,7 @@ struct mobvenNavigationApp: App {
     @StateObject private var welcomeVM = WelcomeViewModel()
     @StateObject private var onboardingVM: OnboardingViewModel
     @StateObject private var sessionManager: UserSessionManager
+    @StateObject private var streakVM: StreakViewModel
     
     init() {
         let flowNav = AppFlowNavigator()
@@ -28,7 +29,7 @@ struct mobvenNavigationApp: App {
         let persistenceService = PersistenceService()
         let networkService = NetworkService()
         
-        // For both using session manager as stateobject and dependency in onboarding vm
+        // For both using session manager as state object and dependency in onboarding vm
         let sessionManagerInstance = UserSessionManager(persistenceService: persistenceService)
         
         _flowNav = StateObject(wrappedValue: flowNav)
@@ -52,19 +53,18 @@ struct mobvenNavigationApp: App {
             persistence: persistenceService,
             flowNav: flowNav
         ))
+        
+        _streakVM = StateObject(wrappedValue: StreakViewModel(networkService: networkService))
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(loginVM: loginVM, welcomeVM: welcomeVM, onboardingVM: onboardingVM, streakVM: streakVM)
                 .environmentObject(flowNav)
                 .environmentObject(mainNav)
                 .environmentObject(mainVM)
-                .environmentObject(welcomeVM)
                 .environmentObject(homeNav)
                 .environmentObject(homeVM)
-                .environmentObject(loginVM)
-                .environmentObject(onboardingVM)
                 .environmentObject(sessionManager)
         }
     }

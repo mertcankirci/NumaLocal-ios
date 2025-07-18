@@ -10,8 +10,8 @@ import SwiftUI
 struct WelcomeScreen: View {
     
     @EnvironmentObject private var appNav: AppFlowNavigator
-    @EnvironmentObject private var welcomeVM: WelcomeViewModel
-    @EnvironmentObject private var loginVM: LoginViewModel
+    @ObservedObject var loginVM: LoginViewModel
+    @ObservedObject var welcomeVM: WelcomeViewModel
     
     let colors: [Color] = [.black, .black.opacity(0.2)]
     let image = Image("onboarding-bg-image")
@@ -58,7 +58,7 @@ struct WelcomeScreen: View {
             // StepIndicator her zaman sabit yerde duracak
             StepIndicator(currentStep: welcomeVM.step.rawValue, totalSteps: WelcomeStep.allCases.count)
                 .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             ZStack {
                 ForEach(WelcomeStep.allCases, id: \.self) { step in
                     VStack(alignment: .leading, spacing: 8) {
@@ -67,7 +67,7 @@ struct WelcomeScreen: View {
                             .fontWeight(.bold)
                             .foregroundStyle(.white)
                             .fixedSize(horizontal: false, vertical: true)
-
+                        
                         Text(step.description)
                             .font(.body)
                             .fontWeight(.regular)
@@ -126,13 +126,9 @@ struct WelcomeScreen: View {
 
 #Preview {
     let appFlowNavigator = AppFlowNavigator()
-    let welcomeVM = WelcomeViewModel()
     let appleSignInService = AppleSignInManager()
     let networkService = NetworkService()
     let persistenceService = PersistenceService()
-    WelcomeScreen()
-        .environmentObject(appFlowNavigator)
-        .environmentObject(welcomeVM)
-        .environmentObject(LoginViewModel(appleSignInService: appleSignInService, networkService: networkService, sessionManager: UserSessionManager(persistenceService: persistenceService), flowNav: appFlowNavigator))
-    
+    WelcomeScreen(loginVM: LoginViewModel(appleSignInService: appleSignInService, networkService: networkService, sessionManager: UserSessionManager(persistenceService: persistenceService), flowNav: appFlowNavigator), welcomeVM: WelcomeViewModel())
+    .environmentObject(appFlowNavigator)
 }

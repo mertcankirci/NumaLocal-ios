@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeeklyGoalSelectionView: View {
     
-    @EnvironmentObject private var onboardingVM: OnboardingViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
     @EnvironmentObject private var appFlowNav: AppFlowNavigator
     
     var body: some View {
@@ -26,7 +26,6 @@ struct WeeklyGoalSelectionView: View {
 
 #Preview {
     let persistenceService = PersistenceService()
-    WeeklyGoalSelectionView()
+    WeeklyGoalSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
         .environmentObject(AppFlowNavigator())
-        .environmentObject(OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }

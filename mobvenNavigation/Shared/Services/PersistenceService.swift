@@ -23,3 +23,13 @@ final class PersistenceService: PersistenceServicable {
         UserDefaults.standard.bool(forKey: onboardingKey)
     }
 }
+
+class MockPersistenceService: PersistenceServicable {
+    func setOnboardingCompleted(_ completed: Bool) {
+        print("Onboarding completed set.")
+    }
+    
+    func isOnboardingCompleted() -> Bool {
+        return false
+    }
+}

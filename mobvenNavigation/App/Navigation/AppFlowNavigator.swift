@@ -7,7 +7,15 @@
 
 import Foundation
 
-class AppFlowNavigator: ObservableObject {
+protocol AppFlowNavigating {
+    var current: AppFlow { get }
+
+    func goToOnboarding()
+    func goToMain()
+}
+
+
+class AppFlowNavigator: AppFlowNavigating, ObservableObject {
   @Published private(set) var current: AppFlow = .welcome
   
   func goToOnboarding() {

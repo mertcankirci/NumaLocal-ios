@@ -21,9 +21,9 @@ final class OnboardingViewModel: ObservableObject {
     @Published var selectedWeeklyGoal: WeeklyGoalOption? = nil
     
     private let networkService: NetworkServicable
-    private let sessionManager: UserSessionManager
+    private let sessionManager: SessionManagable
     private let persistence: PersistenceServicable
-    private let flowNav: AppFlowNavigator
+    private let flowNav: AppFlowNavigating
     
     init(
         networkService: NetworkServicable,
