@@ -20,6 +20,7 @@ struct mobvenNavigationApp: App {
     @StateObject private var onboardingVM: OnboardingViewModel
     @StateObject private var sessionManager: UserSessionManager
     @StateObject private var streakVM: StreakViewModel
+    @StateObject private var agentVM: AgentViewModel
     
     init() {
         let flowNav = AppFlowNavigator()
@@ -55,11 +56,12 @@ struct mobvenNavigationApp: App {
         ))
         
         _streakVM = StateObject(wrappedValue: StreakViewModel(networkService: networkService))
+        _agentVM = StateObject(wrappedValue: AgentViewModel(networkService: networkService))
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView(loginVM: loginVM, welcomeVM: welcomeVM, onboardingVM: onboardingVM, streakVM: streakVM)
+            ContentView(loginVM: loginVM, welcomeVM: welcomeVM, onboardingVM: onboardingVM, streakVM: streakVM, agentVM: agentVM)
                 .environmentObject(flowNav)
                 .environmentObject(mainNav)
                 .environmentObject(mainVM)

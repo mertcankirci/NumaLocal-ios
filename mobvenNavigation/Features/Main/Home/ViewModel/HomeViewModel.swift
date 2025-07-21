@@ -31,6 +31,11 @@ final class HomeViewModel: ObservableObject {
     func goBack() {
         navigationService.back()
     }
+    
+    func getGreetingString() -> String {
+        let date = Date()
+        return date.greetingString
+    }
 }
 
 /// Basit model struct’ı

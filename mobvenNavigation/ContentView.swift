@@ -14,6 +14,7 @@ struct ContentView: View {
     @ObservedObject var welcomeVM: WelcomeViewModel
     @ObservedObject var onboardingVM: OnboardingViewModel
     @ObservedObject var streakVM: StreakViewModel
+    @ObservedObject var agentVM: AgentViewModel
 
     var body: some View {
         Group {
@@ -23,7 +24,7 @@ struct ContentView: View {
             case .onboarding:
                 OnboardingScreen(onboardingVM: onboardingVM)
             case .main:
-                MainFlowView(streakVM: streakVM)
+                MainFlowView(streakVM: streakVM, agentVM: agentVM)
             }
         }
         .animation(.easeInOut, value: flowNav.current)
@@ -50,7 +51,16 @@ struct ContentView: View {
     let appFlowNavigator: AppFlowNavigator = AppFlowNavigator()
     let onboardingVM = OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator())
     
-    ContentView(loginVM: LoginViewModel(appleSignInService: appleSignInService, networkService: networkService, sessionManager: UserSessionManager(persistenceService: persistenceService), flowNav: appFlowNavigator), welcomeVM: WelcomeViewModel(), onboardingVM: onboardingVM, streakVM: StreakViewModel(networkService: networkService))
+    ContentView(
+                loginVM: LoginViewModel(appleSignInService: appleSignInService,
+                                        networkService: networkService,
+                                        sessionManager: UserSessionManager(persistenceService: persistenceService),
+                                        flowNav: appFlowNavigator),
+                welcomeVM: WelcomeViewModel(),
+                onboardingVM: onboardingVM,
+                streakVM: StreakViewModel(networkService: networkService),
+                agentVM: AgentViewModel(networkService: networkService)
+    )
         .environmentObject(AppFlowNavigator())
         .environmentObject(UserSessionManager(persistenceService: PersistenceService()))
 }

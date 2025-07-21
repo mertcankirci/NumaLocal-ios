@@ -14,58 +14,70 @@ struct StreakDayCompletionView: View {
     let todayProgress: Float
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 12) {
             progressComponent()
                 .frame(width: 24, height: 24)
 
             Text(shortDay)
-                .font(.callout)
-                .fontWeight(.medium)
+                .font(.bodyM12)
+                .foregroundColor(Color.blue6)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 16)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.purple.opacity(0.1))
-            )
+
     }
 
     @ViewBuilder
     func progressComponent() -> some View {
         let remainingProgress = 1 - CGFloat(todayProgress)
-
-        if isToday {
-            ZStack {
+        
+        ZStack {
+            if isToday {
                 Circle()
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 3)
-
+                    .stroke(Color.blue1, lineWidth: 7)
+                
                 Circle()
                     .trim(from: remainingProgress, to: 1.0)
-                    .stroke(Color.purple, lineWidth: 3)
+                    .stroke(Color.blue6, lineWidth: 7)
                     .rotationEffect(.degrees(-90))
-            }
-            .padding(2)
-        } else {
-            ZStack {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(isCompleted ? Color.purple : Color.clear)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(isCompleted ? Color.clear : Color.gray.opacity(0.5), lineWidth: 2)
-                    )
-
-                if isCompleted {
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.white)
-                }
+            } else {
+                Circle()
+                    .stroke(isCompleted ? Color.blue6 : Color.natural1, lineWidth: 7)
             }
         }
     }
 }
 
+/*
+ if isToday {
+     ZStack {
+         Circle()
+             .stroke(Color.gray.opacity(0.3), lineWidth: 3)
+
+         Circle()
+             .trim(from: remainingProgress, to: 1.0)
+             .stroke(Color.purple, lineWidth: 3)
+             .rotationEffect(.degrees(-90))
+     }
+     .padding(2)
+ } else {
+     ZStack {
+         RoundedRectangle(cornerRadius: 4)
+             .fill(isCompleted ? Color.purple : Color.clear)
+             .overlay(
+                 RoundedRectangle(cornerRadius: 4)
+                     .stroke(isCompleted ? Color.clear : Color.gray.opacity(0.5), lineWidth: 2)
+             )
+
+         if isCompleted {
+             Image(systemName: "checkmark")
+                 .font(.system(size: 12, weight: .bold))
+                 .foregroundColor(.white)
+         }
+     }
+ }
+ */
 
 #Preview {
     HStack {

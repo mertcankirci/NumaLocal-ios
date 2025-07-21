@@ -11,26 +11,41 @@ struct HomeScreen: View {
     @EnvironmentObject private var homeVM: HomeViewModel
     @EnvironmentObject private var userSessionManager: UserSessionManager
     @ObservedObject var streakVM: StreakViewModel
-
+    @ObservedObject var agentVM: AgentViewModel
+    
     @State private var errorMessage: String?
-
+    
     var body: some View {
-        VStack {
-            Group {
-                Text(userSessionManager.user?.targetLanguage.icon ?? "")
-                    .font(.title)
+        ZStack {
+            
+            Color.background
+                .ignoresSafeArea()
+            
+            VStack {
+                HStack {
+                    Image(userSessionManager.user?.targetLanguage.icon ?? "")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 24)
+                    
+                    HStack(spacing:2) {
+                        Text("\(homeVM.getGreetingString()),")
+                            .font(.bodyM14Regular)
+                        Text("\(userSessionManager.user?.name ?? "")")
+                            .font(.bodyL14)
+                    }
+                    
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("Practice now to complete your daily goal!")
-                    .padding(.top, 16)
+                
+                WeeklyStreakView(streakVM: streakVM)
+                
+                Spacer()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-                
-            
-            WeeklyStreakView(streakVM: streakVM)
-            
-            Spacer()
+            .padding()
         }
-        .padding()
         .onAppear {
             fetchWeeklyStreak()
         }
@@ -42,7 +57,7 @@ struct HomeScreen: View {
             Text(errorMessage ?? "Unknown error occured.")
         })
     }
-
+    
     private func fetchWeeklyStreak() {
         Task {
             do {
@@ -57,33 +72,38 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen(streakVM: StreakViewModel(networkService: NetworkService()))
-        .environmentObject(UserSessionManager())
+    let networkService = NetworkService()
+    
+    HomeScreen(streakVM: StreakViewModel(
+                networkService: networkService),
+                agentVM: AgentViewModel(networkService: networkService)
+    )
+    .environmentObject(UserSessionManager())
 }
 
 /*
  Text("Home Screen")
-     .font(.largeTitle)
-
+ .font(.largeTitle)
+ 
  Button("Go to Detail") {
-     let exampleItem = HomeItem(id: "example", title: "Example Item")
-     homeVM.select(item: exampleItem)
+ let exampleItem = HomeItem(id: "example", title: "Example Item")
+ homeVM.select(item: exampleItem)
  }
  .frame(maxWidth: .infinity)
  .frame(height: 50)
  .background(Color.blue)
  .foregroundColor(.white)
  .cornerRadius(8)
-
+ 
  ForEach(homeVM.items) { item in
-     Button("Show \(item.title)") {
-         homeVM.select(item: item)
-     }
-     .padding(.horizontal)
-     .frame(maxWidth: .infinity, minHeight: 44)
-     .background(Color.gray.opacity(0.1))
-     .cornerRadius(8)
+ Button("Show \(item.title)") {
+ homeVM.select(item: item)
  }
-
+ .padding(.horizontal)
+ .frame(maxWidth: .infinity, minHeight: 44)
+ .background(Color.gray.opacity(0.1))
+ .cornerRadius(8)
+ }
+ 
  Spacer()
  */

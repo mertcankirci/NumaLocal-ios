@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol StreakServiceProtocol {
+    func fetchUserStreak(for userId: Int) async throws -> UserStreakModel
+}
+
 final class StreakViewModel: ObservableObject {
     @Published var userStreakModel: UserStreakModel?
     
@@ -29,7 +33,7 @@ final class StreakViewModel: ObservableObject {
     }
     
     func calculateWeeklyCompletion(reference: Date = Date()) -> [(String, Bool)] {
-        guard let model = userStreakModel else { return [] }
+        guard let model = userStreakModel else { return [("Mon", false), ("Tue", false), ("Wed", false), ("Thu", false), ("Fri", false), ("Sat", false), ("Sun", false)] }
         
         let calendar = Calendar(identifier: .gregorian)
         let startOfWeek = calendar.startOfWeek(for: reference)

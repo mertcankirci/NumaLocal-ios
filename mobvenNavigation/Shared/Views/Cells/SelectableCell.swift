@@ -13,7 +13,7 @@ struct SelectableCell<T: SelectableOption>: View {
     var useInterestPadding: Bool = false
     var useCompactPadding: Bool = false
     let onSelect: () -> Void
-
+    
     
     var body: some View {
         Button(action: {
@@ -21,41 +21,38 @@ struct SelectableCell<T: SelectableOption>: View {
                 onSelect()
             }
         }) {
-            HStack(alignment: .top, spacing: 16) {
+            HStack(spacing: 16) {
                 // Sol taraf: icon (emoji/SFSymbol) veya levelCode
                 if let icon = option.icon {
-                    if icon.containsEmoji {
-                        Text(icon)
-                            .font(.title2)
-                    } else {
-                        Image(systemName: icon)
-                            .font(useInterestPadding ? option.font : .title3)
-                    }
+                    Image(icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                    
                 } else if let levelCode = (option as? LanguageLevelOption)?.levelCode {
                     Text(levelCode)
-                        .foregroundStyle(.black)
-                        .font(.headline)
-                        .fontWeight(.bold)
+                        .font(.bodyL14)
+                        .foregroundColor(.natural9)
                         .frame(width: 30, alignment: .leading)
                 }
-
+                
                 Text(option.title)
                     .font(option.font)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.natural9)
                     .multilineTextAlignment(.leading)
-            
+                
                 if !(T.self == InterestOption.self) {
                     Spacer()
                 }
             }
             .padding(.vertical, useInterestPadding ? 12 : 16)
             .padding(.horizontal, useCompactPadding ? 24 : 16)
-            .background(Color.white)
+            .background(Color.background)
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(isSelected ? Color.blue : Color.gray.opacity(0.4), lineWidth: 2)
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isSelected ? Color.blue6 : Color.natural3, lineWidth: 2)
             )
-            .cornerRadius(8)
+            .cornerRadius(12)
         }
     }
 }

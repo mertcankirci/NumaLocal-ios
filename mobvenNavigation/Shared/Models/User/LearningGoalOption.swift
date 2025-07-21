@@ -9,27 +9,34 @@ import Foundation
 
 enum LearningGoalOption: String, CaseIterable, SelectableOption {
     case speaking
+    case listening
+    case grammar
+    case soundNatural
     case vocabulary
-    case fluency
-    case comprehension
+    case realLifeTalks
+    
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .speaking: return "Speaking Confidence"
-        case .vocabulary: return "Expand Vocabulary"
-        case .fluency: return "Fluency & Flow"
-        case .comprehension: return "Better Comprehension"
+        case .speaking: return "Speak better"
+        case .listening: return "Understand better"
+        case .grammar: return "Improve grammar"
+        case .soundNatural: return "Sound natural"
+        case .vocabulary: return "Expand vocabulary"
+        case .realLifeTalks: return "Handle real life talks"
         }
     }
 
     var icon: String? {
         switch self {
-        case .speaking: return "mic"
-        case .vocabulary: return "text.book.closed"
-        case .fluency: return "speedometer"
-        case .comprehension: return "brain.head.profile"
+        case .speaking: return "messages"
+        case .listening: return "message-question"
+        case .grammar: return "book"
+        case .soundNatural: return "sound"
+        case .vocabulary: return "note"
+        case .realLifeTalks: return "global"
         }
     }
 }

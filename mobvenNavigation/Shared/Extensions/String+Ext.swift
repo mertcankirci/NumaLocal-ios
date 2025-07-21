@@ -8,7 +8,11 @@
 import Foundation
 
 extension String {
-    var containsEmoji: Bool {
-        unicodeScalars.contains { $0.properties.isEmoji }
+    var isFlag: Bool {
+        if self == "TR" || self == "FR" || self == "IT" || self == "GB" || self == "DE" || self == "ES" {
+            return true
+        } else {
+            return false
+        }
     }
 }

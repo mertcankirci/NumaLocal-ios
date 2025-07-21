@@ -29,9 +29,5 @@ enum AgeRangeOption: String, CaseIterable, SelectableOption {
     var icon: String? {
         return nil 
     }
-
-    var font: Font {
-        .body
-    }
 }
 

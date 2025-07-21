@@ -7,7 +7,9 @@
 
 import Foundation
 
-
+protocol OnboardingServiceProtocol {
+    func completeOnboarding(_ user: UserData) async throws -> UserData
+}
 
 final class OnboardingViewModel: ObservableObject {
     @Published var step: OnboardingStep = .nativeLanguageSelection

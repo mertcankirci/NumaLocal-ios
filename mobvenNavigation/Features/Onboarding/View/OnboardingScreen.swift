@@ -13,62 +13,66 @@ struct OnboardingScreen: View {
     @ObservedObject var onboardingVM: OnboardingViewModel
     
     var body: some View {
-        VStack {
-            navigationBar()
-                .frame(height: 40)
+        ZStack {
             
-            Text(onboardingVM.step.title)
-                .foregroundStyle(.primary)
-                .fontWeight(.light)
-                .font(.title2)
-                .padding(.top, 24)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            Color.background
+                .ignoresSafeArea()
             
-            ZStack {
-                switch onboardingVM.step {
-                case .nativeLanguageSelection:
-                    LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: true)
-                case .targetLanguageSelection:
-                    LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: false)
-                case .learningPurposeSelection:
-                    LearningPurposeSelectionView(onboardingVM: onboardingVM)
-                case .learningGoalSelection:
-                    LearningGoalSelectionView(onboardingVM: onboardingVM)
-                case .currentLanguageLevel:
-                    LanguageLevelSelectionView(onboardingVM: onboardingVM)
-                case .ageInput:
-                    AgeInputSelectionView(onboardingVM: onboardingVM)
-                case .interestSelection:
-                    InterestSelectionView(onboardingVM: onboardingVM)
-                case .speakingFrequencyGoal:
-                    WeeklyGoalSelectionView(onboardingVM: onboardingVM)
-                }
-            }
-            .padding(.top, 8)
-            
-            Spacer()
-            
-            if onboardingVM.step.isMultipleSelection {
-                Button {
-                    withAnimation {
-                        onboardingVM.nextStep()
+            VStack {
+                navigationBar()
+                    .frame(height: 40)
+                
+                Text(onboardingVM.step.title)
+                    .font(.titleM16)
+                    .foregroundStyle(Color.natural9)
+                    .padding(.top, 24)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                ZStack {
+                    switch onboardingVM.step {
+                    case .nativeLanguageSelection:
+                        LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: true)
+                    case .targetLanguageSelection:
+                        LanguageSelectionView(onboardingVM: onboardingVM, isNativeLanguageSelection: false)
+                    case .learningPurposeSelection:
+                        LearningPurposeSelectionView(onboardingVM: onboardingVM)
+                    case .learningGoalSelection:
+                        LearningGoalSelectionView(onboardingVM: onboardingVM)
+                    case .currentLanguageLevel:
+                        LanguageLevelSelectionView(onboardingVM: onboardingVM)
+                    case .ageInput:
+                        AgeInputSelectionView(onboardingVM: onboardingVM)
+                    case .interestSelection:
+                        InterestSelectionView(onboardingVM: onboardingVM)
+                    case .speakingFrequencyGoal:
+                        WeeklyGoalSelectionView(onboardingVM: onboardingVM)
                     }
-                } label: {
-                    Text("Next")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(hasSelection ? .white : .gray.opacity(0.6))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(hasSelection ? Color.blue : Color.gray.opacity(0.2))
-                        )
                 }
-                .disabled(!hasSelection)
+                .padding(.top, 8)
+                
+                Spacer()
+                
+                if onboardingVM.step.isMultipleSelection {
+                    Button {
+                        withAnimation {
+                            onboardingVM.nextStep()
+                        }
+                    } label: {
+                        Text("Next")
+                            .font(.titleL18)
+                            .foregroundColor(hasSelection ? .white : .natural1)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(hasSelection ? Color.blue6 : Color.blue3)
+                            )
+                    }
+                    .disabled(!hasSelection)
+                }
             }
+            .padding()
         }
-        .padding()
     }
     
     @ViewBuilder
@@ -93,8 +97,7 @@ struct OnboardingScreen: View {
             Spacer()
             
             Text("\(onboardingVM.step.rawValue + 1) / \(OnboardingStep.allCases.count)")
-                .font(.body)
-                .fontWeight(.semibold)
+                .font(.bodyM12)
         }
     }
     

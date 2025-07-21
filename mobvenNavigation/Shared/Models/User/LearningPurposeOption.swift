@@ -24,9 +24,9 @@ enum LearningPurposeOption: String, CaseIterable, SelectableOption {
     var icon: String? {
         switch self {
         case .travel: return "airplane"
-        case .dailyTalk: return "bubble.left.and.bubble.right"
+        case .dailyTalk: return "calendar"
         case .career: return "briefcase"
-        case .grammar: return "textformat.abc"
+        case .grammar: return "teacher"
         }
     }
 }

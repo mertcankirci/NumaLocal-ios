@@ -9,5 +9,5 @@ import SwiftUI
 import Foundation
 
 extension LanguageLevelOption {
-    var font: Font { .system(size: 14.5) }
+    var font: Font { .bodyM12Regular }
 }

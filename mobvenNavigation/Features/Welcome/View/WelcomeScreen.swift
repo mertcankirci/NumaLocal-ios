@@ -55,7 +55,6 @@ struct WelcomeScreen: View {
     func mainContent() -> some View {
         VStack(alignment: .leading, spacing: 16) {
             
-            // StepIndicator her zaman sabit yerde duracak
             StepIndicator(currentStep: welcomeVM.step.rawValue, totalSteps: WelcomeStep.allCases.count)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -63,14 +62,12 @@ struct WelcomeScreen: View {
                 ForEach(WelcomeStep.allCases, id: \.self) { step in
                     VStack(alignment: .leading, spacing: 8) {
                         Text(step.title)
-                            .font(.title)
-                            .fontWeight(.bold)
+                            .font(.headlineXL26)
                             .foregroundStyle(.white)
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Text(step.description)
-                            .font(.body)
-                            .fontWeight(.regular)
+                            .font(.bodyM14Regular)
                             .foregroundStyle(.white)
                     }
                     .opacity(welcomeVM.step == step ? 1 : 0)

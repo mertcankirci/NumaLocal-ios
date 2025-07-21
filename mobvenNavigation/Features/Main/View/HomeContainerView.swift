@@ -11,12 +11,16 @@ struct HomeContainerView: View {
     @EnvironmentObject private var homeNav: NavigationService<HomeRoute>
     @EnvironmentObject private var homeVM: HomeViewModel
     @ObservedObject var streakVM: StreakViewModel
+    @ObservedObject var agentVM: AgentViewModel
 
     var body: some View {
         NavigationContainerView(
             navigationService: homeNav,
             root:
-                HomeScreen(streakVM: streakVM)
+                HomeScreen(
+                    streakVM: streakVM,
+                    agentVM: agentVM
+                )
             ,
             build: { route in
                 switch route {
@@ -35,8 +39,9 @@ struct HomeContainerView: View {
 struct HomeContainerView_Previews: PreviewProvider {
     static var previews: some View {
         let nav = NavigationService<HomeRoute>()
+        let networkService = NetworkService()
         let vm  = HomeViewModel(navigationService: nav)
-        return HomeContainerView(streakVM: StreakViewModel(networkService: NetworkService()))
+        return HomeContainerView(streakVM: StreakViewModel(networkService: networkService), agentVM: AgentViewModel(networkService: networkService))
             .environmentObject(nav)
             .environmentObject(vm)
     }

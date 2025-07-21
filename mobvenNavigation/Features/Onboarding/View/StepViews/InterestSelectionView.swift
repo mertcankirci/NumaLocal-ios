@@ -10,16 +10,48 @@ import SwiftUI
 struct InterestSelectionView: View {
     @ObservedObject var onboardingVM: OnboardingViewModel
     var body: some View {
-        FlowLayoutView(data: InterestOption.allCases) { interest in
-            SelectableCell(option: interest,
-                           isSelected: onboardingVM.interests.contains(interest),
-                           useInterestPadding: true,
-                           onSelect: {
-                onboardingVM.toggleInterest(interest)
+        
+        var width = CGFloat.zero
+        var height = CGFloat.zero
+        
+        GeometryReader { geo in
+            ZStack(alignment: .topLeading) {
+                ForEach(InterestOption.allCases) { interest in
+                    SelectableCell(
+                        option: interest,
+                        isSelected: isInterestSelected(for: interest),
+                        useInterestPadding: true
+                    ) {
+                        onboardingVM.toggleInterest(interest)
+                    }
+                    .padding(5)
+                    .alignmentGuide(.leading) { dimension in
+                        if (abs(width - dimension.width) > geo.size.width) {
+                            width = 0
+                            height -= dimension.height
+                        }
+                        let result = width
+                        if interest.id == InterestOption.allCases.last?.id {
+                            width = 0
+                        } else {
+                            width -= dimension.width
+                        }
+                        return result
+                    }
+                    .alignmentGuide(.top) { dimension in
+                        let result = height
+                        if interest.id == InterestOption.allCases.last?.id {
+                            height = 0
+                        }
+                        return result
+                    }
                 }
-            )
-            .fixedSize()
+            }
         }
+    }
+    
+    private func isInterestSelected(for interest: InterestOption) -> Bool {
+        return onboardingVM.interests.contains(interest)
     }
 }
 
@@ -29,5 +61,4 @@ struct InterestSelectionView: View {
     
     InterestSelectionView(onboardingVM: OnboardingViewModel(networkService: NetworkService(), sessionManager: UserSessionManager(persistenceService: persistenceService), persistence: persistenceService, flowNav: AppFlowNavigator()))
 }
-
 

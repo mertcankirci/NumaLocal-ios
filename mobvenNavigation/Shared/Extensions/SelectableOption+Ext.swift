@@ -8,5 +8,5 @@
 import SwiftUI
 
 extension SelectableOption {
-    var font: Font { .body } // default
+    var font: Font { .bodyM12Regular } // default
 }

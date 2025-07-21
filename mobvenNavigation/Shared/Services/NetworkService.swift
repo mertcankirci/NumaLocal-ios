@@ -7,11 +7,8 @@
 
 import Foundation
 
-protocol NetworkServicable {
-    func loginOrFetchUser(_ appleUser: AppleSignInUser) async throws -> UserData
-    func completeOnboarding(_ user: UserData) async throws -> UserData
-    func fetchUserStreak(for userId: Int) async throws -> UserStreakModel
-}
+protocol NetworkServicable: OnboardingServiceProtocol, StreakServiceProtocol, LoginServiceProtocol, AgentServiceProtocol {}
+
 
 final class NetworkService: NetworkServicable {
     
@@ -26,7 +23,7 @@ final class NetworkService: NetworkServicable {
             nativeLanguage: .turkish,
             targetLanguage: .english,
             languageLevel: .b1,
-            languageGoals: [.fluency, .comprehension],
+            languageGoals: [.soundNatural, .speaking],
             practicePurpose: [.career],
             weeklyGoal: .twoToThree,
             interests: [.art, .animals]
@@ -54,5 +51,10 @@ final class NetworkService: NetworkServicable {
             currentStreak: 2,
             todayProgress: 0.35
         )
+    }
+    
+    func fetchAgents() async throws -> [Agent] {
+        try await Task.sleep(nanoseconds: 200_000_000)
+        return Agent.mockList
     }
 }

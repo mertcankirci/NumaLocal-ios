@@ -28,7 +28,7 @@ enum LanguageLevelOption: String, CaseIterable, SelectableOption {
     }
 
     var icon: String? {
-        nil 
+        nil
     }
 }
 

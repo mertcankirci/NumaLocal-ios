@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol LoginServiceProtocol {
+    func loginOrFetchUser(_ appleUser: AppleSignInUser) async throws -> UserData
+}
+
 @MainActor
 final class LoginViewModel: ObservableObject {
     private let appleSignInService: AppleSignInManagable

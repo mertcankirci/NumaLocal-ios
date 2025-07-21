@@ -21,12 +21,12 @@ enum LanguageOption: String, CaseIterable, SelectableOption {
 
     var icon: String? {
         switch self {
-        case .turkish: return "🇹🇷"
-        case .english: return "🇬🇧"
-        case .german: return "🇩🇪"
-        case .french: return "🇫🇷"
-        case .spanish: return "🇪🇸"
-        case .italian: return "🇮🇹"
+        case .turkish: return "TR"
+        case .english: return "GB"
+        case .german: return "DE"
+        case .french: return "FR"
+        case .spanish: return "ES"
+        case .italian: return "IT"
         }
     }
 }

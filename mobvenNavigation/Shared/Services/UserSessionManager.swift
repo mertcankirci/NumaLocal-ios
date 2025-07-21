@@ -23,7 +23,9 @@ final class UserSessionManager: SessionManagable, ObservableObject {
     }
 
     func setUser(_ user: UserData) {
-        self.user = user
+        DispatchQueue.main.async {
+            self.user = user
+        }
     }
 
     func markOnboardingCompleted() {
@@ -31,7 +33,9 @@ final class UserSessionManager: SessionManagable, ObservableObject {
     }
 
     func clearSession() {
-        self.user = nil
+        DispatchQueue.main.async {
+            self.user = nil
+        }
     }
 
     var isOnboardingCompleted: Bool {
