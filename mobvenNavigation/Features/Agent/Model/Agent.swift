@@ -19,7 +19,7 @@ extension Agent {
     static let mockOris = Agent(
         id: 1,
         name: "Oris",
-        avatarURL: "person.circle",
+        avatarURL: "numa",
         description: "Your travel companion",
         agnetExpertise: .travel
     )
@@ -27,7 +27,7 @@ extension Agent {
     static let mockParla = Agent(
         id: 2,
         name: "Parla",
-        avatarURL: "person.circle",
+        avatarURL: "numa",
         description: "Business English guide",
         agnetExpertise: .business
     )
@@ -35,7 +35,7 @@ extension Agent {
     static let mockNoru = Agent(
         id: 3,
         name: "Noru",
-        avatarURL: "person.circle",
+        avatarURL: "numa",
         description: "Academic speaking trainer",
         agnetExpertise: .academic
     )
@@ -43,7 +43,7 @@ extension Agent {
     static let mockSona = Agent(
         id: 4,
         name: "Sona",
-        avatarURL: "person.circle",
+        avatarURL: "numa",
         description: "General conversation buddy",
         agnetExpertise: .general
     )

@@ -21,27 +21,40 @@ struct HomeScreen: View {
             Color.background
                 .ignoresSafeArea()
             
-            VStack {
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Image(userSessionManager.user?.targetLanguage.icon ?? "")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32, height: 24)
-                    
-                    HStack(spacing:2) {
-                        Text("\(homeVM.getGreetingString()),")
-                            .font(.bodyM14Regular)
-                        Text("\(userSessionManager.user?.name ?? "")")
-                            .font(.bodyL14)
+                    if let userFlagImageString = userSessionManager.user?.targetLanguage.icon {
+                        Image(userFlagImageString)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 24)
                     }
                     
+                    HStack(spacing:2) {
+                        Text("\(homeVM.getGreetingString())")
+                            .font(.bodyM14Regular)
+                        Text(", \(userSessionManager.user?.name ?? "")")
+                            .font(.bodyL14)
+                    }
                     
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                
                 WeeklyStreakView(streakVM: streakVM)
+                    .padding(.top, 14)
                 
+                Text("Pick Your Agent")
+                    .font(.titleL16)
+                    .padding(.top, 10)
+                
+                SelectAgentGridView()
+                
+                Text("Suggested Prompts")
+                    .font(.titleL16)
+                    .padding(.top, 9)
+                
+                SuggestedPromptsView()
+
                 Spacer()
             }
             .padding()
@@ -73,12 +86,14 @@ struct HomeScreen: View {
 
 #Preview {
     let networkService = NetworkService()
+    let navigationService = NavigationService<HomeRoute>()
     
     HomeScreen(streakVM: StreakViewModel(
                 networkService: networkService),
                 agentVM: AgentViewModel(networkService: networkService)
     )
     .environmentObject(UserSessionManager())
+    .environmentObject(HomeViewModel(navigationService: navigationService))
 }
 
 /*

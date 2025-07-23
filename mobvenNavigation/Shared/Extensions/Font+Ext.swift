@@ -38,6 +38,7 @@ extension Font {
     static let bodyXL16 = Font.custom("Poppins-Bold", size: 16)
     static let bodyL14 = Font.custom("Poppins-SemiBold", size: 14)
     static let bodyM12 = Font.custom("Poppins-Medium", size: 12)
+    static let bodyM10Regular = Font.custom("Poppins-Regular", size: 10)
     static let bodyM12Regular = Font.custom("Poppins-Regular", size: 12)
     static let bodyM14Regular = Font.custom("Poppins-Regular", size: 14)
 

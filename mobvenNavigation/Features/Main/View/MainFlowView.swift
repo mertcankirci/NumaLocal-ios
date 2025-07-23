@@ -39,5 +39,5 @@ struct MainFlowView: View {
 #Preview {
     let networkService = NetworkService()
     MainFlowView(streakVM: StreakViewModel(networkService: networkService), agentVM: AgentViewModel(networkService: networkService))
-        .environmentObject(MainViewModel(navigationService: NavigationService()))
+        .environmentObject(MainViewModel(navigationService: NavigationService<MainTabRoute>()))
 }

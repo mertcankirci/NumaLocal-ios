@@ -18,18 +18,22 @@ struct CustomTabBar: View {
                     selection = tab
                 }) {
                     VStack(spacing: 4) {
-                        Image(systemName: tab.iconName)
+                        Image(tab.iconName)
                             .font(.system(size: 20, weight: .semibold))
                         Text(tab.title)
                             .font(.footnote)
                     }
-                    .foregroundColor(selection == tab ? .blue : .gray)
+                    .foregroundColor(selection == tab ? .blue6 : .natural3)
                     .padding(.vertical, 8)
                     .frame(maxWidth: .infinity)
                 }
             }
         }
-        .background(Color(UIColor.systemBackground).shadow(radius: 2))
+        .background(
+            Rectangle()
+                .fill(Color.white)
+                .cornerRadius(32, corners: [.topRight, .topLeft])
+        )
     }
 }
 

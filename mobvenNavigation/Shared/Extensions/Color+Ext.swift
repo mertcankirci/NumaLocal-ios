@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+// TODO: - Add AppThemeManager
+// Setup a centralized ThemeManager to support runtime theme switching (e.g. light/dark/custom themes)
+// Use AppColors as tokens, and drive them from Theme object instead of static enums directly via structs.
+
+
 extension Color {
     
     // MARK: - Blue

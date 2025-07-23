@@ -5,10 +5,8 @@
 //  Created by Mertcan Kırcı on 15.07.2025.
 //
 
-// App/Navigation/NavigationContainerView.swift
 import SwiftUI
 
-/// RouteProtocol’ü konform tüm enum’larınızı kullanabilirsiniz.
 struct NavigationContainerView<Route: Hashable, Content: View>: View {
     @ObservedObject var navigationService: NavigationService<Route>
     let root: Content
@@ -25,7 +23,7 @@ struct NavigationContainerView<Route: Hashable, Content: View>: View {
                         }
                 }
             } else {
-                // iOS 15: Fallback NavigationView + hidden NavigationLink’ler
+                // iOS 15: Fallback NavigationView + hidden NavigationLink
                 NavigationView {
                     ZStack {
                         root
